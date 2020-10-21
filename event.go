@@ -32,7 +32,7 @@ func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 	var oneTimeChallenge = request.Headers["X-Okta-Verification-Challenge"]
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
-		Body:       oneTimeChallenge,
+		Body:       `{ "verification" : "` + oneTimeChallenge + `" }`,
 	}, nil
 }
 
