@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -18,18 +17,34 @@ import (
 var seededRand *rand.Rand = rand.New(
 	rand.NewSource(time.Now().UnixNano()))
 
-func xhandlerx(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	createUser()
+func router(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	switch req.HTTPMethod {
+	case "GET":
+		return getHandler(req)
+	case "POST":
+		return postHandler(req)
+	default:
+		return clientError(http.StatusMethodNotAllowed)
+	}
+}
+
+func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	var oneTimeChallenge = request.Headers["X-Okta-Verification-Challenge"]
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
-		Body:       "User Created",
+		Body:       oneTimeChallenge,
 	}, nil
 }
 
-func handler(ctx context.Context) (events.APIGatewayProxyResponse, error) {
-	var buf bytes.Buffer
+func clientError(status int) (events.APIGatewayProxyResponse, error) {
+	return events.APIGatewayProxyResponse{
+		StatusCode: status,
+		Body:       http.StatusText(status),
+	}, nil
+}
 
-	createUser()
+func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	var buf bytes.Buffer
 
 	body, err := json.Marshal(map[string]interface{}{
 		"message": "UserCreated",
@@ -37,6 +52,7 @@ func handler(ctx context.Context) (events.APIGatewayProxyResponse, error) {
 	if err != nil {
 		return events.APIGatewayProxyResponse{StatusCode: 404}, err
 	}
+
 	json.HTMLEscape(&buf, body)
 
 	resp := events.APIGatewayProxyResponse{
@@ -53,7 +69,7 @@ func handler(ctx context.Context) (events.APIGatewayProxyResponse, error) {
 }
 
 func main() {
-	lambda.Start(handler)
+	lambda.Start(router)
 	//http.HandleFunc("/userTransfer", handleRequests)
 
 	//var err = http.ListenAndServe(":10000", nil)
