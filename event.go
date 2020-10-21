@@ -28,8 +28,8 @@ func router(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, 
 	}
 }
 
-func getHandlers(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	var oneTimeChallenge = request.Headers["X-Okta-Verification-Challenge"]
+func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	var oneTimeChallenge = request.Headers["x-okta-verification-challenge"]
 	var buf bytes.Buffer
 
 	body, err := json.Marshal(map[string]interface{}{
@@ -51,15 +51,6 @@ func getHandlers(request events.APIGatewayProxyRequest) (events.APIGatewayProxyR
 	}
 
 	return resp, nil
-}
-
-func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-
-	xxx, err := json.Marshal(request.Headers)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return events.APIGatewayProxyResponse{Body: string(xxx), StatusCode: 200}, nil
 }
 
 func clientError(status int) (events.APIGatewayProxyResponse, error) {
