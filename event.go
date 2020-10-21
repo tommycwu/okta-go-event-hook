@@ -15,10 +15,18 @@ import (
 var seededRand *rand.Rand = rand.New(
 	rand.NewSource(time.Now().UnixNano()))
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func xhandlerx(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Body:       "Hello AWS Lambda and Netlify",
+	}, nil
+}
+
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	createUser()
+	return events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Body:       "User Created",
 	}, nil
 }
 
