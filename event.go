@@ -30,10 +30,27 @@ func router(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, 
 
 func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var oneTimeChallenge = request.Headers["X-Okta-Verification-Challenge"]
-	return events.APIGatewayProxyResponse{
-		StatusCode: 200,
-		Body:       `{ "verification" : "` + oneTimeChallenge + `" }`,
-	}, nil
+	var buf bytes.Buffer
+
+	body, err := json.Marshal(map[string]interface{}{
+		"verification": oneTimeChallenge,
+	})
+	if err != nil {
+		return events.APIGatewayProxyResponse{StatusCode: 404}, err
+	}
+
+	json.HTMLEscape(&buf, body)
+
+	resp := events.APIGatewayProxyResponse{
+		StatusCode:      200,
+		IsBase64Encoded: false,
+		Body:            buf.String(),
+		Headers: map[string]string{
+			"Content-Type": "application/json",
+		},
+	}
+
+	return resp, nil
 }
 
 func clientError(status int) (events.APIGatewayProxyResponse, error) {
@@ -61,7 +78,6 @@ func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyR
 		Body:            buf.String(),
 		Headers: map[string]string{
 			"Content-Type": "application/json",
-			"verification": "x-okta-verification-challenge",
 		},
 	}
 
