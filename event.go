@@ -63,6 +63,8 @@ func clientError(status int) (events.APIGatewayProxyResponse, error) {
 func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var buf bytes.Buffer
 
+	createUser()
+
 	body, err := json.Marshal(map[string]interface{}{
 		"message": "UserCreated",
 	})
