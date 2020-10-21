@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bytes"
+	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
@@ -16,18 +19,37 @@ var seededRand *rand.Rand = rand.New(
 	rand.NewSource(time.Now().UnixNano()))
 
 func xhandlerx(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	return events.APIGatewayProxyResponse{
-		StatusCode: 200,
-		Body:       "Hello AWS Lambda and Netlify",
-	}, nil
-}
-
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	createUser()
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Body:       "User Created",
 	}, nil
+}
+
+func handler(ctx context.Context) (events.APIGatewayProxyResponse, error) {
+	var buf bytes.Buffer
+
+	createUser()
+
+	body, err := json.Marshal(map[string]interface{}{
+		"message": "UserCreated",
+	})
+	if err != nil {
+		return events.APIGatewayProxyResponse{StatusCode: 404}, err
+	}
+	json.HTMLEscape(&buf, body)
+
+	resp := events.APIGatewayProxyResponse{
+		StatusCode:      200,
+		IsBase64Encoded: false,
+		Body:            buf.String(),
+		Headers: map[string]string{
+			"Content-Type": "application/json",
+			"verification": "x-okta-verification-challenge",
+		},
+	}
+
+	return resp, nil
 }
 
 func main() {
