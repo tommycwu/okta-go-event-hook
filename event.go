@@ -88,12 +88,6 @@ func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyR
 
 func main() {
 	lambda.Start(router)
-	//http.HandleFunc("/userTransfer", handleRequests)
-
-	//var err = http.ListenAndServe(":10000", nil)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
 }
 
 func RandomString(length int) string {
@@ -126,21 +120,18 @@ func createUser() {
 	var lName = RandomString(5)
 	var uName = fName + "." + lName
 
-	log.Println("uName - " + uName)
 	requestBody := strings.NewReader(`{"profile": {"firstName": "` + fName + `","lastName": "` +
 		lName + `","email": "` + uName + `@mailinator.com","login": "` + uName + `@mailinator.com"}}`)
 
-	url := "https://dev-489843.okta.com/api/v1/users?activate=false"
+	url := "https://[your.okta.org]/api/v1/users?activate=false"
 
-	log.Println("POST - createUser()")
 	req, err := http.NewRequest("POST", url, requestBody) //bytes.NewBuffer(data))
 	if err != nil {
 		log.Fatal("Error reading request. ", err)
 	}
-	log.Println("req.created")
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "SSWS 00Yt1WYxQAXDJu_7Uj8ih0QRy_go01lCnKX93lp0su")
+	req.Header.Set("Authorization", "SSWS [api_key]")
 	log.Println("req.Header.Set(Authorization)")
 
 	client := &http.Client{Timeout: time.Second * 10}
@@ -151,7 +142,5 @@ func createUser() {
 		log.Fatal("Error reading response. ", err)
 	}
 
-	log.Println("response Status: " + resp.Status)
 	defer resp.Body.Close()
-	log.Println("resp.Body.Close()")
 }
