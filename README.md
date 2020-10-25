@@ -8,11 +8,7 @@ And based on this blog https://developer.okta.com/blog/2020/07/20/easy-user-sync
 
 2) Next set up a an event hook in your org. https://developer.okta.com/docs/guides/set-up-event-hook/overview/
 
-  <img src="https://d33wubrfki0l68.cloudfront.net/cee289001a7406f9c0907efdef9f055540754837/a26fb/assets-jekyll/blog/easy-user-sync-hooks/event-hook-create-4e5b321eeabab9e2de3064fef5805ef9bce2d25d3e6a50404ec898694ff79d7a.png" width="200" height="200" />
-
-3) The event hook will be triggered by creating a user in your okta org. 
-
-  <img src="https://d33wubrfki0l68.cloudfront.net/cf71472831ba9863941f48f42e03e52433ab8646/04b4b/assets-jekyll/blog/easy-user-sync-hooks/postman-e8c20ad116d17b5b4132f99cb302ef2381645f94f82ce3c2e441093900d9a276.png" width="400" height="200" />
+3) The event hook will be triggered by creating a user in your okta org. https://developer.okta.com/code/rest/
 
 5) The event hook will reach out to your REST based API (webservice) with an endpoint of /userTransfer (case sensitive).
 
