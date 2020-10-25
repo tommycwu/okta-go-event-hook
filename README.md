@@ -1,15 +1,28 @@
 # okta-go-event-hook
 
-This ia sample okta event hook written in golang.  https://developer.okta.com/docs/concepts/event-hooks/
+This is a sample okta event hook written in golang.  https://developer.okta.com/docs/concepts/event-hooks/.  
+
+And based on this blog https://developer.okta.com/blog/2020/07/20/easy-user-sync-hooks.
 
 1) You will need an okta org.  https://developer.okta.com/signup/
 
-2) Set up a an Event hook in your org. https://developer.okta.com/docs/guides/set-up-event-hook/overview/
+2) Next set up a an event hook in your org. https://developer.okta.com/docs/guides/set-up-event-hook/overview/
 
   <img src="https://d33wubrfki0l68.cloudfront.net/cee289001a7406f9c0907efdef9f055540754837/a26fb/assets-jekyll/blog/easy-user-sync-hooks/event-hook-create-4e5b321eeabab9e2de3064fef5805ef9bce2d25d3e6a50404ec898694ff79d7a.png" width="200" height="200" />
 
-3) The event hook will be invoked by creating a user in your okta org. 
+3) The event hook will be triggered by creating a user in your okta org. 
 
-4) The sample app needs to be hosted in a publicly access address with an ssl enable port (https) 
-  - This sample includes a makefile and toml file set up specificly for https://www.netlify.com/.
+  <img src="https://d33wubrfki0l68.cloudfront.net/cf71472831ba9863941f48f42e03e52433ab8646/04b4b/assets-jekyll/blog/easy-user-sync-hooks/postman-e8c20ad116d17b5b4132f99cb302ef2381645f94f82ce3c2e441093900d9a276.png" width="400" height="200" />
+
+5) The event hook will reach out to your REST based API (webservice) with an endpoint of /userTransfer (case sensitive).
+
+6) The sample app needs to be hosted in a publicly access address with an ssl enable port (https) 
+  - This sample includes a makefile and toml file set up specifically for https://www.netlify.com/.
+
+7) In your API, it will need to have a GET request that will look for 'x-okta-verification-challenge' in the header (all lower case).
+
+8) You will respond in the body of that GET request with whatever value that came with the 'x-okta-verification-challenge' header (this is just to verify your endpoint exists).
+
+9) All subsequent request from the okta event hook will come via POST to the /userTransfer and you can put your business logic there.  (For this sample, it will create a random
+user in another org.  This was done to save a little time as we need to show that it works but I didn't want to set up a db, make a GET call to get user profile info and to create another GET endpoint, which is what was done in the blog.) 
 
