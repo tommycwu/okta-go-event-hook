@@ -12,7 +12,7 @@ And is largely based on this blog https://developer.okta.com/blog/2020/07/20/eas
 
 5) The event hook will reach out to your REST based API (webservice) with an endpoint of /userTransfer (case sensitive).
 
-6) Your API needs to be hosted in a publicly access address with an ssl enable port (https) 
+6) Your API needs to be hosted in a publicly accessible address with an ssl enable port (https) 
   -This sample includes a makefile and toml file set up specifically for https://www.netlify.com/.
 
 7) Your API needs to have a GET request that will look for 'x-okta-verification-challenge' in the header (all lower case).
