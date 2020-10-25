@@ -2,7 +2,7 @@
 
 This is a sample okta event hook written in golang.  https://developer.okta.com/docs/concepts/event-hooks/.  
 
-And based on this blog https://developer.okta.com/blog/2020/07/20/easy-user-sync-hooks.
+And is largely based on this blog https://developer.okta.com/blog/2020/07/20/easy-user-sync-hooks.
 
 1) You will need an okta org.  https://developer.okta.com/signup/
 
