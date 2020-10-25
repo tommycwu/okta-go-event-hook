@@ -13,7 +13,7 @@ And based on this blog https://developer.okta.com/blog/2020/07/20/easy-user-sync
 5) The event hook will reach out to your REST based API (webservice) with an endpoint of /userTransfer (case sensitive).
 
 6) The sample app needs to be hosted in a publicly access address with an ssl enable port (https) 
-  - This sample includes a makefile and toml file set up specifically for https://www.netlify.com/.
+  -This sample includes a makefile and toml file set up specifically for https://www.netlify.com/.
 
 7) In your API, it will need to have a GET request that will look for 'x-okta-verification-challenge' in the header (all lower case).
 
