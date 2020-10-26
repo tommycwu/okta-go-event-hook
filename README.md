@@ -1,6 +1,6 @@
 # okta-go-event-hook
 
-This is a sample okta event hook written in golang.  https://developer.okta.com/docs/concepts/event-hooks/.  
+This is a sample okta event hook written in golang as a aws lambda function.  https://developer.okta.com/docs/concepts/event-hooks/.  
 
 And is largely based on this blog https://developer.okta.com/blog/2020/07/20/easy-user-sync-hooks.
 
