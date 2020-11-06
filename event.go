@@ -123,7 +123,7 @@ func createUser() {
 	requestBody := strings.NewReader(`{"profile": {"firstName": "` + fName + `","lastName": "` +
 		lName + `","email": "` + uName + `@mailinator.com","login": "` + uName + `@mailinator.com"}}`)
 
-	url := "https://[your.okta.org]/api/v1/users?activate=false"
+	url := "https://dev-489843.okta.com/api/v1/users?activate=false"
 
 	req, err := http.NewRequest("POST", url, requestBody) //bytes.NewBuffer(data))
 	if err != nil {
@@ -131,7 +131,7 @@ func createUser() {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "SSWS [api_key]")
+	req.Header.Set("Authorization", "SSWS 00oFbSutf-HZniDaswyvATcLDTVC5dZEp6qdNfIuLk")
 	log.Println("req.Header.Set(Authorization)")
 
 	client := &http.Client{Timeout: time.Second * 10}
