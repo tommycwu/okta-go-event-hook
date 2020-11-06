@@ -131,7 +131,7 @@ func createUser() {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "SSWS 00Hdnp_HWCFFxZMIjypX_7_-ZUiTQhnSZ55MXmFC1H")
+	req.Header.Set("Authorization", "SSWS [api key]")
 	log.Println("req.Header.Set(Authorization)")
 
 	client := &http.Client{Timeout: time.Second * 10}
