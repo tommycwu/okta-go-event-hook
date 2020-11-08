@@ -100,7 +100,6 @@ func RandomString(length int) string {
 }
 
 func createUser() {
-
 	var fName = RandomString(4)
 	var lName = RandomString(5)
 	var uName = fName + "." + lName
@@ -116,7 +115,7 @@ func createUser() {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "SSWS 0079zOxT5XcMhRgYylQJH2Zt_ngirnNQ3nxeaFQ8Ac")
+	req.Header.Set("Authorization", "SSWS 00gf3bOJayAS9lVA1rAEwk1nurvswYMLYXyAVpvugC")
 
 	client := &http.Client{Timeout: time.Second * 10}
 
