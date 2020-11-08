@@ -7,5 +7,5 @@
   GO_IMPORT_PATH = "github.com/tommycwu/okta-go-event-hook"
 [[redirects]]
   from = "/userTransfer/*"
-  to = "/.netlify/functions/hello-lambda/:splat"
+  to = "/.netlify/functions/event/:splat"
   status = 200
