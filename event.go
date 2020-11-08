@@ -99,21 +99,6 @@ func RandomString(length int) string {
 	return string(b)
 }
 
-func handleRequests(w http.ResponseWriter, r *http.Request) {
-	log.Println(time.Now().String() + " " + r.Method)
-
-	if r.Method == "POST" {
-		log.Println("POST - handleRequests()")
-		createUser()
-		w.Header().Set("Service", "Okta Event Hook")
-		w.WriteHeader(200)
-		fmt.Fprintf(w, "HTTP/1.1 200 OK")
-		return
-	}
-
-	http.Error(w, r.Method+" is not supported.", http.StatusNotFound)
-}
-
 func createUser() {
 
 	var fName = RandomString(4)
@@ -131,7 +116,7 @@ func createUser() {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "SSWS [api key]")
+	req.Header.Set("Authorization", "SSWS 0079zOxT5XcMhRgYylQJH2Zt_ngirnNQ3nxeaFQ8Ac")
 	log.Println("req.Header.Set(Authorization)")
 
 	client := &http.Client{Timeout: time.Second * 10}
