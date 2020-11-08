@@ -110,7 +110,7 @@ func createUser() {
 
 	url := "https://dev-489843.okta.com/api/v1/users?activate=false"
 
-	req, err := http.NewRequest("POST", url, requestBody) //bytes.NewBuffer(data))
+	req, err := http.NewRequest("POST", url, requestBody)
 	if err != nil {
 		log.Fatal("Error reading request. ", err)
 	}
