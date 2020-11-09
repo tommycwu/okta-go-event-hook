@@ -28,9 +28,12 @@ func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 	var oneTimeChallenge = request.Headers["x-okta-verification-challenge"]
 	var buf bytes.Buffer
 
+	log.Println("GET begin")
+
 	body, err := json.Marshal(map[string]interface{}{
 		"verification": oneTimeChallenge,
 	})
+
 	if err != nil {
 		return events.APIGatewayProxyResponse{StatusCode: 404}, err
 	}
@@ -46,13 +49,16 @@ func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 		},
 	}
 
+	log.Println("GET end")
+
 	return resp, nil
 }
 
 func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var buf bytes.Buffer
 
-	//createUser()
+	log.Println("POST begin")
+	createUser()
 
 	body, err := json.Marshal(map[string]interface{}{
 		"message": "UserCreated",
@@ -72,6 +78,7 @@ func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyR
 		},
 	}
 
+	log.Println("POST end")
 	return resp, nil
 }
 
@@ -114,7 +121,7 @@ func createUser() {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "SSWS 00gf3bOJayAS9lVA1rAEwk1nurvswYMLYXyAVpvugC")
+	req.Header.Set("Authorization", "SSWS 00UD80LJ12UlkBWUJ6kAn1vRYk79xfS4bnjdpnNqjp")
 
 	client := &http.Client{Timeout: time.Second * 10}
 
