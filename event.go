@@ -28,8 +28,6 @@ func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 	var oneTimeChallenge = request.Headers["x-okta-verification-challenge"]
 	var buf bytes.Buffer
 
-	log.Println("GET begin")
-
 	body, err := json.Marshal(map[string]interface{}{
 		"verification": oneTimeChallenge,
 	})
@@ -49,16 +47,14 @@ func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 		},
 	}
 
-	log.Println("GET end")
-
 	return resp, nil
 }
 
 func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var buf bytes.Buffer
 
-	log.Println("POST begin")
-	createUser()
+	log.Println("POST")
+	//createUser()
 
 	body, err := json.Marshal(map[string]interface{}{
 		"message": "UserCreated",
@@ -77,8 +73,6 @@ func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyR
 			"Content-Type": "application/json",
 		},
 	}
-
-	log.Println("POST end")
 	return resp, nil
 }
 
