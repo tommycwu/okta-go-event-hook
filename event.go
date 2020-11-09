@@ -53,8 +53,7 @@ func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var buf bytes.Buffer
 
-	log.Println("POST")
-	//createUser()
+	createUser()
 
 	body, err := json.Marshal(map[string]interface{}{
 		"message": "UserCreated",
@@ -103,6 +102,7 @@ func createUser() {
 	var fName = RandomString(4)
 	var lName = RandomString(5)
 	var uName = fName + "." + lName
+	log.Println("Attempting to create " + uName)
 
 	requestBody := strings.NewReader(`{"profile": {"firstName": "` + fName + `","lastName": "` +
 		lName + `","email": "` + uName + `@mailinator.com","login": "` + uName + `@mailinator.com"}}`)
@@ -123,6 +123,8 @@ func createUser() {
 	if err != nil {
 		log.Fatal("Error reading response. ", err)
 	}
+
+	log.Println("User created " + uName)
 
 	defer resp.Body.Close()
 }
