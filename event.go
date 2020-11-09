@@ -3,19 +3,11 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
-	"log"
-	"math/rand"
 	"net/http"
-	"strings"
-	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
-
-var seededRand *rand.Rand = rand.New(
-	rand.NewSource(time.Now().UnixNano()))
 
 func router(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	switch req.HTTPMethod {
@@ -53,17 +45,10 @@ func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 	return resp, nil
 }
 
-func clientError(status int) (events.APIGatewayProxyResponse, error) {
-	return events.APIGatewayProxyResponse{
-		StatusCode: status,
-		Body:       http.StatusText(status),
-	}, nil
-}
-
 func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var buf bytes.Buffer
 
-	createUser()
+	//createUser()
 
 	body, err := json.Marshal(map[string]interface{}{
 		"message": "UserCreated",
@@ -86,9 +71,21 @@ func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyR
 	return resp, nil
 }
 
+func clientError(status int) (events.APIGatewayProxyResponse, error) {
+	return events.APIGatewayProxyResponse{
+		StatusCode: status,
+		Body:       http.StatusText(status),
+	}, nil
+}
+
 func main() {
 	lambda.Start(router)
 }
+
+/*
+
+var seededRand *rand.Rand = rand.New(
+	rand.NewSource(time.Now().UnixNano()))
 
 func RandomString(length int) string {
 	const charset = "abcdefghijklmnopqrstuvwxyz"
@@ -100,7 +97,6 @@ func RandomString(length int) string {
 }
 
 func createUser() {
-
 	var fName = RandomString(4)
 	var lName = RandomString(5)
 	var uName = fName + "." + lName
@@ -110,17 +106,15 @@ func createUser() {
 
 	url := "https://dev-489843.okta.com/api/v1/users?activate=false"
 
-	req, err := http.NewRequest("POST", url, requestBody) //bytes.NewBuffer(data))
+	req, err := http.NewRequest("POST", url, requestBody)
 	if err != nil {
 		log.Fatal("Error reading request. ", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "SSWS 0079zOxT5XcMhRgYylQJH2Zt_ngirnNQ3nxeaFQ8Ac")
-	log.Println("req.Header.Set(Authorization)")
+	req.Header.Set("Authorization", "SSWS 00gf3bOJayAS9lVA1rAEwk1nurvswYMLYXyAVpvugC")
 
 	client := &http.Client{Timeout: time.Second * 10}
-	log.Println("client.Timeout.Set")
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -129,3 +123,4 @@ func createUser() {
 
 	defer resp.Body.Close()
 }
+*/
