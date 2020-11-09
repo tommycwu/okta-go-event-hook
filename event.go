@@ -3,7 +3,11 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"log"
+	"math/rand"
 	"net/http"
+	"strings"
+	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -82,7 +86,6 @@ func main() {
 	lambda.Start(router)
 }
 
-/*
 var seededRand *rand.Rand = rand.New(
 	rand.NewSource(time.Now().UnixNano()))
 
@@ -122,4 +125,3 @@ func createUser() {
 
 	defer resp.Body.Close()
 }
-*/
