@@ -52,7 +52,7 @@ func getHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 func postHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var buf bytes.Buffer
 
-	//createUser()
+	createUser()
 
 	body, err := json.Marshal(map[string]interface{}{
 		"message": "UserCreated",
@@ -114,7 +114,7 @@ func createUser() {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "SSWS 00gf3bOJayAS9lVA1rAEwk1nurvswYMLYXyAVpvugC")
+	req.Header.Set("Authorization", "SSWS 00UD80LJ12UlkBWUJ6kAn1vRYk79xfS4bnjdpnNqjp")
 
 	client := &http.Client{Timeout: time.Second * 10}
 
